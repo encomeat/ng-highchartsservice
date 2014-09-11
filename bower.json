@@ -1,0 +1,11 @@
+{
+  "name": "ng-highchartsservice",
+  "version": "0.0.7",
+  "main": "dist/ng-highchartsservice.js",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "latest",
+    "angular-mocks": "latest",
+    "jquery": "latest"
+  }
+}
