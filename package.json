@@ -5,7 +5,6 @@
   "keywords": [
     "angular", "highcharts"
   ],
-  "homepage": "https://github.com/pablojim/ng-highchartsservice",
   "private": true,
   "licenses": [],
   "devDependencies": {

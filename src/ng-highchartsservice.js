@@ -12,23 +12,12 @@
     };
   }());
 
-  // implent your own service plugin while inheriting from HighchartsServicePlugin
-  window.MyHighchartsServicePlugin = function MyHighchartsServicePlugin() {
-    window.HighchartsServicePlugin.call(this);
-
-    // create a method, which is being called in Highcharts-Service context
-    this.isAlive = function isAlive() {
-      console.log(arguments);
-      return true;
-    };
-  };
-
   /**
   * handles (un)registering of plugins and offers a callMethod method to call all registered plugins.
   * @return {[type]} [description]
   */
 
-  var PluginService = function PluginService() {
+  var HighchartsPluginService = function PluginService() {
     var plugins = [new window.HighchartsServicePlugin()];
 
     var callMethod = function callPlugins(methodName, thisContext, args) {
@@ -76,29 +65,33 @@
   };
 
   (function(angular) {
-    var ChartConfig = ['$resource', function ChartConfig($resource) {
+    var HighchartsChartConfig = ['$resource', function HighchartsChartConfig($resource) {
     }];
 
-    var Diagram = ['$resource', function Diagram($resource) {
+    var HighchartsDiagram = ['$resource', function HighchartsDiagram($resource) {
     }];
 
-    var HighchartService = ['ChartConfig', 'Diagram', function HighchartService(ChartConfig, Diagram) {
-      var c = ChartConfig;
-      var d = Diagram;
-      var pluginService = new PluginService();
+    var HighchartService = ['HighchartsChartConfig', 'HighchartsDiagram',
+                              function (HighchartsChartConfig, HighchartsDiagram) {
 
-      return {
-        registerPlugin: pluginService.registerPlugin,
-        callMethod: pluginService.callMethod,
-        unregisterPlugin: pluginService.unregisterPlugin,
+      return function HighchartService() {
+        var config = HighchartsChartConfig;
+        var diagram = HighchartsDiagram;
+        var pluginService = new HighchartsPluginService();
+
+        return {
+          registerPlugin: pluginService.registerPlugin,
+          callMethod: pluginService.callMethod,
+          unregisterPlugin: pluginService.unregisterPlugin,
+        };
       };
     }];
 
     // wire module and its components up with angular
     angular.module('ng-highchartsservice', ['ngResource', 'highcharts-ng'])
-    .service('highchartsService', HighchartService)
-    .factory('ChartConfig', ChartConfig)
-    .factory('Diagram', Diagram);
+    .service('HighchartsService', HighchartService)
+    .factory('HighchartsChartConfig', HighchartsChartConfig)
+    .factory('HighchartsDiagram', HighchartsDiagram);
 
   }(angular));
 }());
