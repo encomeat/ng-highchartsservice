@@ -1,24 +1,24 @@
 (function () {
   'use strict';
   /**
-   * HighchartsServicePlugin is exported to the global scope. It basically is an nullobject,
+   * Define HighchartsServicePluginFactory. It basically is an nullobject,
    * creating an interface from which a HighchartsServicePlugin should inherit via
-   * `window.HighchartsServicePlugin.call(this);`
+   * `HighchartsServicePlugin.call(this);`
    * @return {function} Interface/Nullobject for HighchartServicePlugin
    */
-  window.HighchartsServicePlugin = function () {
-    var noop = function () {
-    };
-    var functionNames = [
-        'preInit',
-        'isAlive'
-      ];
-    return function HighchartsServicePlugin() {
-      for (var i = 0; i < functionNames.length; i++) {
-        this[functionNames[i]] = noop;
-      }
-    };
-  }();
+  var HighchartsServicePlugin = function () {
+      var noop = function () {
+      };
+      var functionNames = [
+          'preInit',
+          'isAlive'
+        ];
+      return function HighchartsServicePlugin() {
+        for (var i = 0; i < functionNames.length; i++) {
+          this[functionNames[i]] = noop;
+        }
+      };
+    }();
   /**
   * handles (un)registering of plugins and offers a callMethod method to call all registered plugins.
   * @return {object} Public API
@@ -62,23 +62,19 @@
       unregisterPlugin: unregisterPlugin
     };
   };
-  var HighchartsChartConfig = [
-      '$resource',
-      function HighchartsChartConfig($resource) {
-      }
-    ];
-  var HighchartsDiagram = [
-      '$resource',
-      function HighchartsDiagram($resource) {
-      }
-    ];
+  var HighchartsChartConfig = [function HighchartsChartConfig() {
+      }];
+  var HighchartsDiagram = [function HighchartsDiagram() {
+      }];
   var HighchartService = [
       'HighchartsChartConfig',
       'HighchartsDiagram',
       function (HighchartsChartConfig, HighchartsDiagram) {
         return function HighchartService() {
-          var config = HighchartsChartConfig;
-          var diagram = HighchartsDiagram;
+          if (HighchartsChartConfig) {
+          }
+          if (HighchartsDiagram) {
+          }
           var pluginService = new HighchartsPluginService();
           return {
             registerPlugin: pluginService.registerPlugin,
@@ -92,5 +88,5 @@
   angular.module('ng-highchartsservice', [
     'ngResource',
     'highcharts-ng'
-  ]).factory('HighchartsService', HighchartService).factory('HighchartsChartConfig', HighchartsChartConfig).factory('HighchartsDiagram', HighchartsDiagram);
+  ]).factory('HighchartsService', HighchartService).factory('HighchartsChartConfig', HighchartsChartConfig).factory('HighchartsDiagram', HighchartsDiagram).factory('HighchartsServicePlugin', HighchartsServicePlugin);
 }());
