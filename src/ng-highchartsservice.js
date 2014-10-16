@@ -2,12 +2,12 @@
   'use strict';
 
   /**
-   * HighchartsServicePlugin is exported to the global scope. It basically is an nullobject,
+   * Define HighchartsServicePluginFactory. It basically is an nullobject,
    * creating an interface from which a HighchartsServicePlugin should inherit via
-   * `window.HighchartsServicePlugin.call(this);`
+   * `HighchartsServicePlugin.call(this);`
    * @return {function} Interface/Nullobject for HighchartServicePlugin
    */
-  window.HighchartsServicePlugin = (function () {
+  var HighchartsServicePlugin = (function () {
     var noop = function() {};
     var functionNames = ['preInit', 'isAlive'];
 
@@ -69,18 +69,23 @@
     };
   };
 
-  var HighchartsChartConfig = ['$resource', function HighchartsChartConfig($resource) {
+  var HighchartsChartConfig = [function HighchartsChartConfig() {
   }];
 
-  var HighchartsDiagram = ['$resource', function HighchartsDiagram($resource) {
+  var HighchartsDiagram = [ function HighchartsDiagram() {
   }];
 
   var HighchartService = ['HighchartsChartConfig', 'HighchartsDiagram',
                             function (HighchartsChartConfig, HighchartsDiagram) {
 
     return function HighchartService() {
-      var config = HighchartsChartConfig;
-      var diagram = HighchartsDiagram;
+      if (HighchartsChartConfig) {
+
+      }
+      if (HighchartsDiagram) {
+
+      }
+
       var pluginService = new HighchartsPluginService();
 
       return {
@@ -95,6 +100,7 @@
   angular.module('ng-highchartsservice', ['ngResource', 'highcharts-ng'])
   .factory('HighchartsService', HighchartService)
   .factory('HighchartsChartConfig', HighchartsChartConfig)
-  .factory('HighchartsDiagram', HighchartsDiagram);
+  .factory('HighchartsDiagram', HighchartsDiagram)
+  .factory('HighchartsServicePlugin', HighchartsServicePlugin);
 
 }());
