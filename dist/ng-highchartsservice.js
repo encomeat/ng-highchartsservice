@@ -9,6 +9,7 @@
   var HighchartsServicePlugin = function () {
       var noop = function () {
       };
+      // TODO: inject functionNames dynamically
       var functionNames = [
           'preInit',
           'isAlive'
@@ -20,9 +21,9 @@
       };
     }();
   /**
-  * handles (un)registering of plugins and offers a callMethod method to call all registered plugins.
-  * @return {object} Public API
-  */
+   * handles (un)registering of plugins and offers a callMethod method to call all registered plugins.
+   * @return {object} Public API
+   */
   var HighchartsPluginService = function PluginService() {
     var plugins = [new window.HighchartsServicePlugin()];
     var callMethod = function callPlugins(methodName, thisContext, args) {
