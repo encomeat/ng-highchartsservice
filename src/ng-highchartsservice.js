@@ -92,5 +92,5 @@
     'ngResource',
     'highcharts-ng'
   ]).factory('HighchartsService', HighchartService).factory('HighchartsChartConfig', HighchartsChartConfig).factory(
-    'HighchartsDiagram', HighchartsDiagram).factory('HighchartsServicePlugin', HighchartsServicePlugin);
+    'HighchartsDiagram', HighchartsDiagram).service('HighchartsServicePlugin', HighchartsServicePlugin);
 }());
