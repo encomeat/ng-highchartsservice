@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   /**
    * Define HighchartsServicePluginFactory. It basically is an nullobject,
@@ -6,20 +6,20 @@
    * `HighchartsServicePlugin.call(this);`
    * @return {function} Interface/Nullobject for HighchartServicePlugin
    */
-  var HighchartsServicePlugin = (function() {
-    var noop = function() {};
-    // TODO: inject functionNames dynamically
-    var functionNames = [
-      'preInit',
-      'isAlive'
-    ];
-
-    return function HighchartsServicePlugin() {
-      for (var i = 0; i < functionNames.length; i++) {
-        this[functionNames[i]] = noop;
-      }
-    };
-  }());
+  var HighchartsServicePlugin = (function () {
+      var noop = function () {
+      };
+      // TODO: inject functionNames dynamically
+      var functionNames = [
+          'preInit',
+          'isAlive'
+        ];
+      return function HighchartsServicePlugin() {
+        for (var i = 0; i < functionNames.length; i++) {
+          this[functionNames[i]] = noop;
+        }
+      };
+    }());
   /**
    * handles (un)registering of plugins and offers a callMethod method to call all registered plugins.
    * @return {object} Public API
@@ -63,34 +63,35 @@
       unregisterPlugin: unregisterPlugin
     };
   };
-  var HighchartsChartConfig = [
-
-    function HighchartsChartConfig() {}
-  ];
-  var HighchartsDiagram = [
-
-    function HighchartsDiagram() {}
-  ];
+  var HighchartsChartConfig = [function HighchartsChartConfig() {
+      }];
+  var HighchartsDiagram = [function HighchartsDiagram() {
+      }];
   var HighchartService = [
-    'HighchartsChartConfig',
-    'HighchartsDiagram',
-    function(HighchartsChartConfig, HighchartsDiagram) {
-      return function HighchartService() {
-        if (HighchartsChartConfig) {}
-        if (HighchartsDiagram) {}
-        var pluginService = new HighchartsPluginService();
-        return {
-          registerPlugin: pluginService.registerPlugin,
-          callMethod: pluginService.callMethod,
-          unregisterPlugin: pluginService.unregisterPlugin
+      'HighchartsChartConfig',
+      'HighchartsDiagram',
+      function (HighchartsChartConfig, HighchartsDiagram) {
+        return function HighchartService() {
+          if (HighchartsChartConfig) {
+          }
+          if (HighchartsDiagram) {
+          }
+          var pluginService = new HighchartsPluginService();
+          return {
+            registerPlugin: pluginService.registerPlugin,
+            callMethod: pluginService.callMethod,
+            unregisterPlugin: pluginService.unregisterPlugin
+          };
         };
-      };
-    }
-  ];
+      }
+    ];
   // wire module and its components up with angular
   angular.module('ng-highchartsservice', [
     'ngResource',
     'highcharts-ng'
-  ]).factory('HighchartsService', HighchartService).factory('HighchartsChartConfig', HighchartsChartConfig).factory(
-    'HighchartsDiagram', HighchartsDiagram).service('HighchartsServicePlugin', HighchartsServicePlugin);
+  ])
+  .factory('HighchartsService', HighchartService)
+  .factory('HighchartsChartConfig', HighchartsChartConfig)
+  .factory('HighchartsDiagram', HighchartsDiagram)
+  .factory('HighchartsServicePlugin', HighchartsServicePlugin);
 }());
