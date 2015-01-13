@@ -2,7 +2,7 @@
   'use strict';
   var noop = function() {};
   var functionNames = [];
-
+  var debug = false;
   var HighChartsConfigService = function HighChartsConfigService() {
     this.$get = function() {
       return {
@@ -13,6 +13,10 @@
     // allow injection of functionNames
     this.setFunctionNames = function(functionNames) {
       functionNames = functionNames;
+    };
+
+    this.setDebugMode = function(debugMode) {
+      debug = !!debugMode;
     };
   };
 
@@ -45,11 +49,15 @@
           if (plugins[i][methodName]) {
             plugins[i][methodName].apply(thisContext, args);
           } else {
-            console.log('method ' + methodName + ' not available on ', plugins[i]);
+            if (debug) {
+              console.log('HighchartsPluginService: method ' + methodName + ' not available on ', plugins[i]);
+            }
           }
         } catch (e) {
           // if method not implemented or some error happened, do not abort processing.
-          console.error(e);
+          if (debug) {
+            console.error('HighchartsPluginService', e);
+          }
         }
       }
     };
